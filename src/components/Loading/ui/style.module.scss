@@ -1,0 +1,9 @@
+@use '@styles/colors' as colors;
+@use '@styles/media' as media;
+
+.loading {
+    textAlign: center;
+    padding: 40px;
+    fontSize: 18px;
+    color: #666;
+}
