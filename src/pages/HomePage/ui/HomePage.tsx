@@ -24,28 +24,20 @@ export const HomePage = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchLoading, setSearchLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
 const debouncedFilter = useRef(
     debounce((search: string, usersList: IUser[]) => {
-      setSearchLoading(true);
-      
       if (!search.trim()) {
         setFilteredUsers(usersList);
-        setSearchLoading(false);
         return;
       }
-
       const filtered = usersList.filter((user) =>
         user.name.first.toLowerCase().includes(search.toLowerCase()) ||
         user.name.last.toLowerCase().includes(search.toLowerCase())
       );
-
-      // Имитируем задержку для демонстрации лоадера
       setTimeout(() => {
         setFilteredUsers(filtered);
-        setSearchLoading(false);
       }, 300);
     },1000)
   ).current;
@@ -53,20 +45,15 @@ const debouncedFilter = useRef(
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        console.log('Начало загрузки данных...');
         setLoading(true);
-        console.log('Loading установлен в true');
         
         const data = await fetchUsers();
-        console.log('Данные получены:', data.length, 'пользователей');
         
         setUsers(data);
         setFilteredUsers(data);
       } catch (error) {
-        console.error('Ошибка загрузки:', error);
         setError(error instanceof Error ? error.message : 'Ошибка');
       } finally {
-        console.log('Завершение загрузки, loading = false');
         setLoading(false);
       }
     }
@@ -93,7 +80,13 @@ if (loading) {
     <>
       <Header />
       <Search onSearch={handleSearch} />
-      <Table users={filteredUsers}/>
+      {filteredUsers.length > 0 ? (
+        <Table users={filteredUsers}/>
+      ) : (
+        <div>
+          Ничего не найдено
+        </div>
+      )}
     </>
   );
 };
