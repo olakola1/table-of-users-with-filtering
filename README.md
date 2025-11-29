@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# Таблица пользователей с фильтрацией
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+Веб-приложение для отображения и поиска пользователей. Получает данные с внешнего API и позволяет их фильтровать по имени.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Функции
 
-## Expanding the ESLint configuration
+- Отображение пользователей в таблице
+- Поиск по имени и фамилии
+- Увеличение изображений при наведении
+- Индикатор загрузки данных
+- Адаптивный дизайн
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Технологии
 
-- Configure the top-level `parserOptions` property like this:
+- React 18
+- TypeScript
+- Vite
+- SCSS
+- React Router (упрощенная версия)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.server.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Структура
+
+```
+src/
+├── main.tsx              # Точка входа
+├── styles/               # Стили
+├── pages/HomePage/       # Главная страница
+├── components/           # Компоненты
+│   ├── Header/           # Заголовок
+│   ├── Table/            # Таблица
+│   ├── Search/           # Поиск
+│   └── Loading/          # Загрузка
+├── types/user.ts         # Типы
+└── api/userApi.ts        # API
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Компоненты
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+**HomePage** - основная логика, загрузка данных  
+**Table** - отображение пользователей, hover эффекты  
+**Search** - поисковая строка с debounce  
+**Loading** - индикатор загрузки
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Данные
+
+Источник: `https://randomuser.me/api/?results=15`
+
+## Конфигурация
+
+.env
+REACT_APP_API_URL=https://randomuser.me/api/?results=15

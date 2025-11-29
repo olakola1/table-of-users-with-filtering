@@ -1,7 +1,5 @@
 @forward 'colors';
 @forward 'fonts';
-@forward 'typography';
-@forward 'media';
 @use "../../node_modules/normalize.css/normalize";
 
 html {
@@ -40,8 +38,10 @@ img {
 }
 
 body {
-  min-width: 320px;
   word-break: normal;
+  width: 1920px;
+  margin: 0 auto;
+  padding: 20px;
 
 }
 bl

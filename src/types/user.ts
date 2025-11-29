@@ -13,8 +13,8 @@ export interface IUser {
   };
 
   location: {
-  state: string;
-  city: string;
+    state: string;
+    city: string;
   };
 
   email:string;
@@ -23,6 +23,10 @@ export interface IUser {
   registered: {
     date: string;
   };
+}
+
+export interface ApiResponse {
+  results: IUser[];
 }
 
 

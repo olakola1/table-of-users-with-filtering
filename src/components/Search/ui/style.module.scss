@@ -1,2 +1,13 @@
 @use '@styles/colors' as colors;
-@use '@styles/media' as media;
+
+.search_container {
+  margin: 20px 0 20px;
+}
+
+.button_reset {
+  margin-left: 20px;
+  border:1px solid colors.$black;
+  background-color: colors.$dark-gray;
+  height: 24px;
+  width: 100px;
+}

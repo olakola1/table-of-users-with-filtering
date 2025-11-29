@@ -4,6 +4,7 @@ import { IUser } from "../../../types/user.ts";
 import { fetchUsers } from "../../../api/userApi.ts";
 import {Search} from "../../../components/Search";
 import { Loading } from "../../../components/Loading";
+import { Header } from "../../../components/Header";
 
 const debounce=(callee:Function, timeoutMs:number) => {
   return function perform(...args:any[]) {
@@ -23,12 +24,16 @@ export const HomePage = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const debouncedFilter= useRef(
+const debouncedFilter = useRef(
     debounce((search: string, usersList: IUser[]) => {
+      setSearchLoading(true);
+      
       if (!search.trim()) {
         setFilteredUsers(usersList);
+        setSearchLoading(false);
         return;
       }
 
@@ -37,20 +42,31 @@ export const HomePage = () => {
         user.name.last.toLowerCase().includes(search.toLowerCase())
       );
 
-      setFilteredUsers(filtered);
+      // Имитируем задержку для демонстрации лоадера
+      setTimeout(() => {
+        setFilteredUsers(filtered);
+        setSearchLoading(false);
+      }, 300);
     },1000)
   ).current;
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
+        console.log('Начало загрузки данных...');
         setLoading(true);
+        console.log('Loading установлен в true');
+        
         const data = await fetchUsers();
+        console.log('Данные получены:', data.length, 'пользователей');
+        
         setUsers(data);
         setFilteredUsers(data);
       } catch (error) {
-        setError(error instanceof Error ? error.message : 'Unknown error');
+        console.error('Ошибка загрузки:', error);
+        setError(error instanceof Error ? error.message : 'Ошибка');
       } finally {
+        console.log('Завершение загрузки, loading = false');
         setLoading(false);
       }
     }
@@ -61,7 +77,7 @@ export const HomePage = () => {
     debouncedFilter(query, users);
   };
 
-  if (loading) {
+if (loading) {
     return <Loading />;
   }
 
@@ -75,6 +91,7 @@ export const HomePage = () => {
 
   return (
     <>
+      <Header />
       <Search onSearch={handleSearch} />
       <Table users={filteredUsers}/>
     </>

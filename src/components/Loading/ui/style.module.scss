@@ -1,9 +1,26 @@
 @use '@styles/colors' as colors;
-@use '@styles/media' as media;
 
 .loading {
-    textAlign: center;
+    display: flex;
     padding: 40px;
-    fontSize: 18px;
-    color: #666;
+    gap: 16px;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 4px solid colors.$gray;
+    border-top: 4px solid colors.$dark-gray;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.text {
+    font-size: 18px;
+    color: colors.$black
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

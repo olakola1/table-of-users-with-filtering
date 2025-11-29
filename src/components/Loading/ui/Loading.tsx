@@ -3,7 +3,8 @@ import style from './style.module.scss';
 export const Loading = () => {
   return (
     <div className={style.loading}>
-      Загрукзка...
+      <div className={style.spinner}></div>
+      <div className={style.text}>Загрузка</div>
     </div>
   )
 };
